@@ -1,3 +1,5 @@
+import signal
+import sys
 from functools import partial
 from json import dumps, loads
 
@@ -11,6 +13,15 @@ app = Flask(__name__)
 producer = KafkaProducer(bootstrap_servers=['localhost:9094'],
                          value_serializer=lambda x:
                          dumps(x).encode('utf-8'))
+
+
+def signal_handler(sig, frame):
+    app.logger.info("Shutting down collector / Flushing the producer queue")
+    producer.flush()
+    sys.exit(0)
+
+
+signal.signal(signal.SIGINT, signal_handler)
 
 
 def handle_kafka_error(data, ex):
