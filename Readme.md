@@ -18,6 +18,12 @@ PreRequsites
 
     Docker & docekr-compose is required
 
+
+Notes:
+    
+    Kafka Docker setup from: https://github.com/wurstmeister/kafka-docker
+    
+
 Assumptions
  - you can run as many emmitters as required - they need to know the endpoint of the collector
  - collector should be placed behind load balancer so that it can be scaled and highly available
