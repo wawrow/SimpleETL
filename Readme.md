@@ -12,7 +12,7 @@ Directory structure
          - Redis
          - InfluxDB
     
-    - tests - unit tests
+    - tests - unit tests ```python -m pytest tests``` to run locally
     
 PreRequsites 
 
@@ -22,7 +22,8 @@ PreRequsites
 Notes:
     
     Kafka Docker setup from: https://github.com/wurstmeister/kafka-docker
-    
+    Influx/Chronograph/Grafana setup from: https://github.com/jkehres/docker-compose-influxdb-grafana/blob/master/docker-compose.yml
+
 
 Assumptions
  - you can run as many emmitters as required - they need to know the endpoint of the collector

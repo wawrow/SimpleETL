@@ -1,0 +1,22 @@
+{
+    "type": "object",
+    "properties": {
+        "id": {
+            "type": "string"
+        },
+        "type": {
+            "type": "string"
+        },
+        "content": {
+            "type": "object",
+            "properties": {
+                "temperature_f": {
+                    "type": "number"
+                },
+                "time_of_measurement": {
+                    "type": "string"
+                }
+            }
+        }
+    }
+}

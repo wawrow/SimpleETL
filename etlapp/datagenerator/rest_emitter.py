@@ -2,14 +2,16 @@ import json
 import logging
 
 import requests
+from .. import config
 
 log = logging.getLogger(__name__)
+
+# TODO: Should this be class?
 
 
 class Emitter:
     def __init__(self, endpoint_config):
-        assert 'Url' in endpoint_config
-        self.Url = endpoint_config['Url']
+        self.Url = endpoint_config.get('Url', config.REST_EMITTER_URL)
         self.Method = 'PUT'
 
     def send_message(self, payload):

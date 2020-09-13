@@ -1,0 +1,8 @@
+FROM tiangolo/meinheld-gunicorn-flask:python3.7
+# Note: for nginx version uncomment two lines below and comment out the one above
+# FROM tiangolo/uwsgi-nginx-flask:python3.7
+# RUN echo $'[uwsgi] \n\
+#     module = etlapp.collector.flask_collector' >> /app/uwsgi.ini
+COPY ./etlapp /app/etlapp
+WORKDIR /app
+RUN pip install --no-cache-dir -r ./etlapp/requirements.txt

@@ -6,13 +6,16 @@ import pkgutil
 import threading
 from time import sleep
 
-import datagenerator
+from . import datagenerator
+from . import config
+
 
 # log = logging.getLogger(__name__)
+logging.basicConfig(level=config.LOG_LEVEL)
 
-emitters = [name for _, name, _ in pkgutil.iter_modules(
+emitters = [__package__ + '.datagenerator.' + name for _, name, _ in pkgutil.iter_modules(
     datagenerator.__path__) if name.endswith('_emitter')]
-generators = [name for _, name, _ in pkgutil.iter_modules(
+generators = [__package__ + '.datagenerator.' + name for _, name, _ in pkgutil.iter_modules(
     datagenerator.__path__) if name.endswith('_generator')]
 
 
@@ -23,21 +26,21 @@ def args_parser():
     )
 
     argparser.add_argument('-e', '--emitter', type=str, choices=emitters,
-                           default=emitters[0],
+                           default=config.DATA_EMITTER,
                            help='Emitter module to use')
 
     argparser.add_argument('-c', '--emitter-config', nargs=2, action='append',
-                           help='Emitter configurations')
+                           help='Emitter configurations entry, Example: Url http://localhost')
 
     argparser.add_argument('-g', '--generator', type=str, choices=generators,
-                           default=generators[0],
+                           default=config.DATA_GENERATOR,
                            help='Generator module to use')
 
     argparser.add_argument('-v', '--verbose', help='increase output verbosity',
                            action='store_true')
 
     argparser.add_argument('-t', '--throughput', help='increase output verbosity',
-                           type=float, default=0.5)
+                           type=float, default=config.EMITTER_REQUESTS_PER_SECOND)
 
     return argparser
 
@@ -45,12 +48,9 @@ def args_parser():
 def main(args):
     if args.verbose:
         logging.basicConfig(level=logging.DEBUG)
-    else:
-        logging.basicConfig(level=logging.INFO)
 
-    emittermodule = importlib.import_module("datagenerator." + args.emitter)
-    generatormodule = importlib.import_module(
-        "datagenerator." + args.generator)
+    emittermodule = importlib.import_module(args.emitter)
+    generatormodule = importlib.import_module(args.generator)
     emitter = emittermodule.Emitter(args.emitter_config)
     waittime = 1 / args.throughput
     while True:
@@ -62,5 +62,6 @@ def main(args):
 if __name__ == '__main__':
     parser = args_parser()
     mappedargs, remaining = parser.parse_known_args()
-    mappedargs.emitter_config = {k: v for k, v in mappedargs.emitter_config}
+    mappedargs.emitter_config = {
+        k: v for k, v in mappedargs.emitter_config} if mappedargs.emitter_config else {}
     main(mappedargs)

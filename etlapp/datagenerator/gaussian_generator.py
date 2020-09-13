@@ -1,10 +1,8 @@
 from datetime import datetime
-from random import uniform
+from random import gauss
 from uuid import uuid4
 
-TEMPERATURE_F_MIN = 32
-TEMPERATURE_F_MAX = 212
-TEMPERATURE_F_DECIMALS = 2
+from .. import config
 
 
 def generate_reading():
@@ -17,8 +15,10 @@ def generate_reading():
         'id': str(uuid4()),
         'type': 'Sensor',
         'content': {
-            'temperature_f': round(uniform(
-                TEMPERATURE_F_MIN, TEMPERATURE_F_MAX), TEMPERATURE_F_DECIMALS),
+            'temperature_f': round(gauss(
+                config.GAUSS_GENERATOR_TEMPERATURE_F_MEAN,
+                config.GAUSS_GENERATOR_TEMPERATURE_F_SIGMA),
+                config.GENERATOR_TEMPERATURE_F_DECIMALS),
             'time_of_measurement': datetime.utcnow().strftime('%Y-%m-%dT%H:%M:%S')
         }
     }

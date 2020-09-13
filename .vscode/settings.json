@@ -9,6 +9,8 @@
     "python.linting.pylintEnabled": true,
     "python.linting.pylintArgs": [
         "--enable=W0614",
-        "--ignore=C0114"
+        "--ignore=C0114",
+        "--init-hook",
+        "import sys; sys.path.append('./'); "
     ],
 }

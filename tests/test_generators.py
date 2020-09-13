@@ -1,14 +1,15 @@
-
+# pylint: disable=no-self-use, missing-function-docstring
 import importlib
 import pkgutil
 from datetime import datetime
 
 import pytest
 
-import datagenerator
+import etlapp.datagenerator
 
-generators = [importlib.import_module('datagenerator.' + name) for _, name, _ in pkgutil.iter_modules(
-    datagenerator.__path__) if name.endswith('_generator')]
+generators = [importlib.import_module('etlapp.datagenerator.' + name)
+              for _, name, _ in pkgutil.iter_modules(etlapp.datagenerator.__path__)
+              if name.endswith('_generator')]
 
 
 @ pytest.mark.parametrize('tested_generator', generators)
