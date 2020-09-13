@@ -21,6 +21,8 @@ services:
     environment:
       - MODULE_NAME=etlapp.collector.flask_collector
       - LOG_LEVEL=DEBUG
+    expose: 
+      - "80"
 
   datamapper:
     build: 
