@@ -19,9 +19,11 @@ Using Python and Kafka, with options to consume data from various sources (MQTT 
 
 ## PreRequsites 
 
-    Docker & docekr-compose is required
+Docker & docekr-compose is required
 
-    python requirements are in requiremets.txt (except Flask as it breaks docker build and is unnecessary) using venv is highly recommended - in the future will have two deparate requirement.txt for dev and build (likely tox)
+Python requirements are in requiremets.txt (except Flask as it breaks docker build and is unnecessary) using venv is highly recommended - in the future will have two deparate requirement.txt for dev and build (likely tox)
+
+Python 3.7.9 used during development
 
 ## Usage
 
