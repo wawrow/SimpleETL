@@ -1,9 +1,9 @@
-# Simple, yet flexible ETL solution 
+# Simple, yet flexible ETL solution
 Using Python and Kafka, with options to consume data from various sources (MQTT and REST included) and saving to multiple DBs (InfluxDB included, Mongo To be added).
 
-## Directory structure    
+## Directory structure
 
-``` 
+```
     SimpleETL
     /docker               - docker & docker-compose files necessary to run local simulation of ETL
     /docker/.env.mqtt     - docker-compose configuration file for mqtt variant of simulation
@@ -17,7 +17,7 @@ Using Python and Kafka, with options to consume data from various sources (MQTT 
     /tests                - Unit and functional tests
 ```
 
-## PreRequsites 
+## PreRequsites
 
 Docker & docekr-compose is required
 
@@ -45,10 +45,11 @@ For MQTT version use:
 **NOTE** - you need to perform build when switching between mqtt and rest as they use the same docker-compose container names and this might lead to unexpected errors
 
 Once containers are running you should see something like this when you run:
+
 ```
 $ docker-compose --env-file .env.mqtt ps
          Name                       Command               State                         Ports
---------------------------------------------------------------------------------------------------------------------     
+--------------------------------------------------------------------------------------------------------------------
 docker_chronograf_1      /entrypoint.sh chronograf        Up      127.0.0.1:8888->8888/tcp
 docker_collector_1       python -m etlapp.collector ...   Up
 docker_datagenerator_1   python -m etlapp.datagenerator   Up
@@ -59,7 +60,7 @@ docker_influxdb_1        /entrypoint.sh influxd           Up      0.0.0.0:8086->
 docker_kafka-1_1         start-kafka.sh                   Up      0.0.0.0:9094->9094/tcp
 docker_kafka-2_1         start-kafka.sh                   Up      0.0.0.0:9095->9095/tcp
 docker_kafka-3_1         start-kafka.sh                   Up      0.0.0.0:9096->9096/tcp
-docker_zookeeper_1       /bin/sh -c /usr/sbin/sshd  ...   Up      0.0.0.0:2181->2181/tcp, 22/tcp, 2888/tcp, 3888/tcp     
+docker_zookeeper_1       /bin/sh -c /usr/sbin/sshd  ...   Up      0.0.0.0:2181->2181/tcp, 22/tcp, 2888/tcp, 3888/tcp
 mosquitto                /docker-entrypoint.sh /usr ...   Up      0.0.0.0:1883->1883/tcp, 0.0.0.0:9001->9001/tcp
 ```
 
@@ -70,6 +71,7 @@ http://127.0.0.1:3000/  -> to access grafana
 ```
 
 ## Scaling
+
 You can scale your environment horizontally by adding additional hosts using:
 ```
 docker-compose --env-file .env.rest scale datamapper=3
@@ -86,6 +88,8 @@ python -m pytest --cov=etlapp --cov-report term-missing
 
 ```
 - [ ] implement tests for MQTT related code
+- [ ] implement tests for MongoDB related code
+- [ ] Add docker-compose configuration for MongoDB runs
 - [ ] consider capturing metrics
 - [ ] add some out of the box dashboards
 - [ ] consider batching of data during processing
@@ -94,9 +98,9 @@ python -m pytest --cov=etlapp --cov-report term-missing
 - [ ] ensure linting is clear
 ```
 
-## Notes:
+## Notes
+
 ```
 Kafka Docker setup based on: https://github.com/wurstmeister/kafka-docker
 Influx/Chronograph/Grafana setup from: https://github.com/jkehres/docker-compose-influxdb-grafana/blob/master/docker-compose.yml
 ```
- 

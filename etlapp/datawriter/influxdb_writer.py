@@ -1,5 +1,4 @@
 import logging
-from json import dumps, loads
 
 from influxdb import InfluxDBClient
 
