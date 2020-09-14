@@ -1,7 +1,8 @@
-from .. import config
-from ..queuehelper import get_producer, get_consumer
 import importlib
 import logging
+
+from .. import config
+from ..queuehelper import get_consumer, get_producer
 
 log = logging.getLogger(__name__)
 logging.basicConfig(level=config.LOG_LEVEL)
@@ -10,14 +11,14 @@ logging.basicConfig(level=config.LOG_LEVEL)
 def main():
     datamap = importlib.import_module(
         config.PIPELINE_DATA_TRANSFORMATION_MODULE)
-    log.info("Starting Data mapper %s" %
+    log.info("Starting Data mapper %s",
              config.PIPELINE_DATA_TRANSFORMATION_MODULE)
     consumer = get_consumer(config.PIPELINE_COLLECTED_DATA_QUEUE_TOPIC)
     producer = get_producer()
     log.debug("Data mapper connected to the Queue")
     for message in consumer:
         message = datamap.map(message.value)
-        log.debug('Message consumed: {}'.format(message,))
+        log.debug('Message consumed: %s', message)
         producer.send(
             config.PIPELINE_TRANFORMED_DATA_QUEUE_TOPIC, value=message)
         consumer.commit()

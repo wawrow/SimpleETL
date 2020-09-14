@@ -1,8 +1,5 @@
 import logging
-import sys
-import time
 from functools import partial, wraps
-from json import dumps, load, loads
 
 from flask import Flask, g, request
 from flask.logging import create_logger
@@ -22,7 +19,7 @@ logging.basicConfig(level=config.LOG_LEVEL)
 def get_producer():
     '''Singleton like access to producer coming from App Context
     Returns:
-        KafkaProducer: 
+        KafkaProducer
     '''
     if 'producer' not in g:
         log.info("Connecting to the Queue")
@@ -69,7 +66,7 @@ def validate_request_json_schema(schema_name):
 @app.route('/' + config.PIPELINE_NAME, methods=['PUT'])
 @validate_request_json_schema(config.PIPELINE_NAME)
 def receive_message():
-
+    '''Endpoit for consuming data from sensors'''
     get_producer().send(
         config.PIPELINE_COLLECTED_DATA_QUEUE_TOPIC, request.json) \
         .add_errback(partial(handle_kafka_error, request.json))

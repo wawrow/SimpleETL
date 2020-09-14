@@ -45,7 +45,7 @@ def args_parser():
 def main():
 
     parser = args_parser()
-    args, remaining = parser.parse_known_args()
+    args, _ = parser.parse_known_args()
     args.emitter_config = {
         k: v for k, v in args.emitter_config} if args.emitter_config else {}
 

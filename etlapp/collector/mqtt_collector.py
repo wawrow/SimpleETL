@@ -44,7 +44,7 @@ def on_message(producer, client, userdata, msg):
                   msg.payload)
     except ValidationError:
         log.error("Invalid Request Payload Received: %s", msg.payload)
-    except Exception as ex:
+    except Exception as ex:  # pylint: disable=broad-except
         log.exception(ex)
 
 

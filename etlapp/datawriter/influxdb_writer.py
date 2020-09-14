@@ -2,9 +2,9 @@ import logging
 from json import dumps, loads
 
 from influxdb import InfluxDBClient
-from ..queuehelper import get_consumer
 
 from .. import config
+from ..queuehelper import get_consumer
 
 log = logging.getLogger(__name__)
 logging.basicConfig(level=config.LOG_LEVEL)
@@ -33,7 +33,7 @@ influx_record_conversion = {
 
 def main():
 
-    log.info('Starting InfluxDB writer for topic %s ' %
+    log.info('Starting InfluxDB writer for topic %s ',
              config.PIPELINE_TRANFORMED_DATA_QUEUE_TOPIC)
 
     if config.PIPELINE_NAME not in influx_record_conversion:
@@ -51,5 +51,5 @@ def main():
     for message in consumer:
         client.write_points(
             [influx_record_conversion[config.PIPELINE_NAME](message.value)])
-        log.debug('Message consumed and written to the DB: {}'.format(message,))
+        log.debug('Message consumed and written to the DB: %s', message)
         consumer.commit()

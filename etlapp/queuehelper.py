@@ -1,8 +1,10 @@
-from kafka import KafkaConsumer, KafkaProducer, errors
-import time
 import logging
-from . import config
+import time
 from json import dumps, loads
+
+from kafka import KafkaConsumer, KafkaProducer, errors
+
+from . import config
 
 log = logging.getLogger(__name__)
 logging.basicConfig(level=config.LOG_LEVEL)
@@ -19,7 +21,7 @@ def get_producer(retries=None, retrydelay=1):
         error: NoBrokersAvailable if unable to connect in desired retries
 
     Returns:
-        KafkaProducer: 
+        KafkaProducer
     """
     i = 0
     while True:
@@ -51,7 +53,7 @@ def get_consumer(topic, retries=None, retrydelay=1):
         error: NoBrokersAvailable if unable to connect in desired retries
 
     Returns:
-        KafkaConsumer: 
+        KafkaConsumer
     """
     i = 0
     while True:
