@@ -91,6 +91,7 @@ python -m pytest --cov=etlapp --cov-report term-missing
 - [ ] consider batching of data during processing
 - [ ] cleanup requirements.txt
 - [ ] create separate requrements for dev/deploy (tox)
+- [ ] ensure linting is clear
 ```
 
 ## Notes:
