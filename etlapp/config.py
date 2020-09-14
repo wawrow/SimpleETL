@@ -50,5 +50,6 @@ INFLUXDB_PORT = environ.get('INFLUXDB_PORT', 8086)
 INFLUXDB_USERNAME = environ.get('INFLUXDB_USERNAME', 'admin')
 INFLUXDB_PASSWORD = environ.get('INFLUXDB_PASSWORD', 'admin')
 
-# Queue Settings
-QUEUE_IMPLEMENTATION_MODULE = 'etlapp.queuehelper.kafka_queue'
+#MongoDB Settings
+MONGODB_URL = environ.get('MONGODB_URL','mongodb://localhost:27017/')
+MONGODB_DB = environ.get('MONGODB_DB','sensors')

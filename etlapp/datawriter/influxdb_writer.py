@@ -53,3 +53,6 @@ def main():
             [influx_record_conversion[config.PIPELINE_NAME](message.value)])
         log.debug('Message consumed and written to the DB: %s', message)
         consumer.commit()
+
+if __name__ == "__main__":
+    main()
