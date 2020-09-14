@@ -34,7 +34,7 @@ def get_producer(retries=None, retrydelay=1):
             if retries is None:
                 continue
             i = i+1
-            if i > retries:
+            if i >= retries:
                 raise error
 
 
@@ -69,5 +69,5 @@ def get_consumer(topic, retries=None, retrydelay=1):
             if retries is None:
                 continue
             i = i+1
-            if i > retries:
+            if i >= retries:
                 raise error

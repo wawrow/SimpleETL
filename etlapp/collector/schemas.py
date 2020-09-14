@@ -5,22 +5,24 @@ data_schemas = {
         'type': 'object',
         'properties': {
             'id': {
-                'type': 'string'
+                'type': 'string',
             },
             'type': {
-                'type': 'string'
+                'type': 'string',
             },
             'content': {
                 'type': 'object',
                 'properties': {
                     'temperature_f': {
-                        'type': 'number'
+                        'type': 'number',
                     },
                     'time_of_measurement': {
-                        'type': 'string'
+                        'type': 'string',
                     }
-                }
+                },
+                'required': ["temperature_f", "time_of_measurement"]
             }
-        }
+        },
+        'required': ["id", "type", "content"]
     }
 }

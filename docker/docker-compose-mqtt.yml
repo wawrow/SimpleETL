@@ -1,0 +1,42 @@
+version: "3.5"
+services:
+  mosquitto:
+    image: eclipse-mosquitto
+    hostname: mosquitto
+    container_name: mosquitto
+    expose:
+    - "1883"
+    - "9001"
+    ports:
+    - "1883:1883"
+    - "9001:9001"
+    # volumes:
+    # - ./mosquitto/mosquitto.conf:/mosquitto/config/mosquitto.conf
+    # networks:
+    # - default
+  datagenerator:
+    depends_on: 
+      - mosquitto
+    build: 
+      context: ../
+      dockerfile: ./docker/Dockerfile.python
+    # volumes:      
+      #Use this only for development
+      # - ../etlapp/:/app/etlapp
+    command: etlapp.datagenerator
+    env_file: ./temperature.env
+    environment:
+      - DATA_EMITTER=etlapp.datagenerator.mqtt_emitter    
+
+  collector:
+    depends_on: 
+      - mosquitto
+    build: 
+      context: ../
+      dockerfile: ./docker/Dockerfile.python
+    # volumes:      
+      #Use this only for development
+      # - ../etlapp/:/app/etlapp
+    command: etlapp.collector.mqtt_collector
+    env_file: ./temperature.env
+

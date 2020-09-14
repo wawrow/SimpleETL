@@ -1,4 +1,3 @@
-#!/usr/bin/env python3
 import argparse
 import importlib
 import logging
@@ -6,16 +5,14 @@ import pkgutil
 import threading
 from time import sleep
 
-from . import datagenerator
-from . import config
-
+from .. import config, datagenerator
 
 # log = logging.getLogger(__name__)
 logging.basicConfig(level=config.LOG_LEVEL)
 
-emitters = [__package__ + '.datagenerator.' + name for _, name, _ in pkgutil.iter_modules(
+emitters = [__package__ + '.' + name for _, name, _ in pkgutil.iter_modules(
     datagenerator.__path__) if name.endswith('_emitter')]
-generators = [__package__ + '.datagenerator.' + name for _, name, _ in pkgutil.iter_modules(
+generators = [__package__ + '.' + name for _, name, _ in pkgutil.iter_modules(
     datagenerator.__path__) if name.endswith('_generator')]
 
 
@@ -45,7 +42,13 @@ def args_parser():
     return argparser
 
 
-def main(args):
+def main():
+
+    parser = args_parser()
+    args, remaining = parser.parse_known_args()
+    args.emitter_config = {
+        k: v for k, v in args.emitter_config} if args.emitter_config else {}
+
     if args.verbose:
         logging.basicConfig(level=logging.DEBUG)
 
@@ -60,8 +63,4 @@ def main(args):
 
 
 if __name__ == '__main__':
-    parser = args_parser()
-    mappedargs, remaining = parser.parse_known_args()
-    mappedargs.emitter_config = {
-        k: v for k, v in mappedargs.emitter_config} if mappedargs.emitter_config else {}
-    main(mappedargs)
+    main()

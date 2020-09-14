@@ -1,46 +1,22 @@
-version: '3.2'
+version: '3.5'
 services:  
-  datagenerator:
-    build: 
-      context: ../
-      dockerfile: ./docker/Dockerfile.python
-    volumes:      
-    #Use this only for development
-      - ../etlapp/:/app/etlapp
-    command: etlapp.emitter
-    env_file: ./temperature.env
-
-  collector:
-    build: 
-      context: ../
-      dockerfile: ./docker/Dockerfile.flask    
-    volumes:      
-      #Use this only for development
-      - ../etlapp/:/app/etlapp 
-    env_file: ./temperature.env
-    environment:
-      - MODULE_NAME=etlapp.collector.flask_collector
-      - LOG_LEVEL=DEBUG
-    expose: 
-      - "80"
-
   datamapper:
     build: 
       context: ../
       dockerfile: ./docker/Dockerfile.python    
-    volumes:      
+    # volumes:      
       #Use this only for development
-      - ../etlapp/:/app/etlapp
+      # - ../etlapp/:/app/etlapp
     env_file: ./temperature.env
-    command: etlapp.datamapper.mapper
+    command: etlapp.datamapper
   
   datawriter:
     build:
       context: ../
       dockerfile: ./docker/Dockerfile.python    
-    volumes:      
+    # volumes:      
       #Use this only for development
-      - ../etlapp/:/app/etlapp
+      # - ../etlapp/:/app/etlapp
     env_file: ./temperature.env
-    command: etlapp.datawriter.influxdb_writer
+    command: etlapp.datawriter
     

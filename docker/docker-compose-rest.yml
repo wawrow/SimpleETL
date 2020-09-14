@@ -1,0 +1,27 @@
+version: '3.5'
+services:  
+  datagenerator:
+    build: 
+      context: ../
+      dockerfile: ./docker/Dockerfile.python
+    # volumes:      
+      #Use this only for development
+      # - ../etlapp/:/app/etlapp
+    command: etlapp.datagenerator
+    env_file: ./temperature.env
+    environment:
+      - DATA_EMITTER=etlapp.datagenerator.rest_emitter    
+
+  collector:
+    build: 
+      context: ../
+      dockerfile: ./docker/Dockerfile.flask    
+    # volumes:      
+      #Use this only for development
+      # - ../etlapp/:/app/etlapp 
+    env_file: ./temperature.env
+    environment:
+      - MODULE_NAME=etlapp.collector.flask_collector
+      - LOG_LEVEL=INFO
+    expose: 
+      - "80"

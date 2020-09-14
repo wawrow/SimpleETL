@@ -13,4 +13,8 @@
         "--init-hook",
         "import sys; sys.path.append('./'); "
     ],
+    "files.exclude": {
+        "**/__pycache__": true,
+        "**/.pytest_cache": true
+    },
 }
