@@ -7,7 +7,7 @@ Using Python and Kafka, with options to consume data from various sources (MQTT 
     SimpleETL
     /docker               - docker & docker-compose files necessary to run local simulation of ETL
     /docker/.env.mqtt     - docker-compose configuration file for mqtt variant of simulation
-    /docker/.env.rest     - docker-compose configuration file for mqtt variant of simulation
+    /docker/.env.rest     - docker-compose configuration file for rest variant of simulation
     /etlapp               - main python module
     /etlapp/collector     - collector modules for collecting data from the sensors and 
                           redirecting to  the queue
